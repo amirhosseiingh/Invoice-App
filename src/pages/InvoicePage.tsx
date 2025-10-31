@@ -4,15 +4,19 @@ import type { Product } from "../types/invoice"
 import { invoiceApi } from "../api/InvoiceApi"
 import { useState } from "react"
 import toast from "react-hot-toast"
+import AddProductModal from "../components/AddProductModal"
 
 function InvoicePage() {
     const queryClient = useQueryClient()
     const [modalOpen , setModalOpen]= useState(false)
     const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+    const [addModalOpen, setAddModalOpen] = useState(false);
+
     const {data : products , isLoading} = useQuery<Product[]>({
         queryKey : ["products"] , 
         queryFn : invoiceApi.getProducts
     })
+    
     const deleteMutation = useMutation({
       mutationFn: invoiceApi.deleteProduct,
       onSuccess: () => {
@@ -30,9 +34,14 @@ function InvoicePage() {
 
 
   return (
-    <div className="p-6">
+    <div className="p-6 ">
       <Header />
-
+      <button
+        className="bg-blue-300 text-blue-900 p-1 "
+        onClick={() => setAddModalOpen(true)}
+      >
+        افزودن محصول
+      </button>
       <table className="w-full border text-left">
         <thead>
           <tr className="bg-gray-100 text-center">
@@ -73,6 +82,11 @@ function InvoicePage() {
           ))}
         </tbody>
       </table>
+      {addModalOpen && (
+        <AddProductModal
+          onClose={() => setAddModalOpen(false)}
+        />
+      )}
     </div>
   );
 }

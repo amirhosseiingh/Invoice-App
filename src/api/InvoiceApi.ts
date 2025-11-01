@@ -12,7 +12,7 @@ export const invoiceApi = {
       return res.data
     },
     updateProduct : async (Product:Product) : Promise<Product> => {
-        const res = await axios.put(`${API_URL} / ${Product.id}` , Product)
+        const res = await axios.put(`${API_URL}/${Product.id}` , Product)
         return res.data
     },
     deleteProduct : async (id :string) : Promise<void> => {

@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+
 import Header from "../components/Header"
 import type { Product } from "../types/invoice"
 import { invoiceApi } from "../api/InvoiceApi"
@@ -6,6 +6,8 @@ import { useState } from "react"
 
 import AddProductModal from "../components/AddProductModal"
 import DeleteConfirmModal from "../components/DeleteConfirmModal"
+import EditProductModal from "../components/EditProductModal"
+import { useQuery } from "@tanstack/react-query"
 
 function InvoicePage() {
     // const queryClient = useQueryClient()
@@ -20,6 +22,7 @@ function InvoicePage() {
         queryKey : ["products"] , 
         queryFn : invoiceApi.getProducts
     })
+    
   if (isLoading) return <div>Loading...</div>;
 
 
@@ -87,6 +90,15 @@ function InvoicePage() {
       )}
       {addModalOpen && (
         <AddProductModal onClose={() => setAddModalOpen(false)} />
+      )}
+      {modalOpen && editingProduct && (
+        <EditProductModal 
+        product={editingProduct}
+        onClose={()=>{
+          setModalOpen(false),
+          setEditingProduct(null)
+        }}
+        />
       )}
     </div>
   );

@@ -31,16 +31,23 @@ function InvoicePage() {
 
   return (
     <div className="p-6 space-y-4 ">
+      <div className="bg-blue-100 text-blue-900 p-3 rounded-lg mb-6 text-center font-medium">
+         پروژه مدیریت فاکتور — ساخته شده توسط امیرحسین قنبریان
+      </div>
+
       <Header />
-      <button
-        className="bg-blue-300 text-blue-900 p-1 "
-        onClick={() => setAddModalOpen(true)}
-      >
-        افزودن محصول
-      </button>
-      <table className="w-full border text-left">
+      <div className="flex justify-end mb-4">
+        <button
+          className="bg-blue-300 text-blue-900 p-2 rounded font-medium hover:bg-blue-400 "
+          onClick={() => setAddModalOpen(true)}
+        >
+          افزودن محصول
+        </button>
+      </div>
+
+      <table className="w-full border text-left ">
         <thead>
-          <tr className="bg-gray-100 text-center">
+          <tr className="bg-gray-50 text-center">
             <th className="p-2 border">نام کالا</th>
             <th className="p-2 border">تعداد</th>
             <th className="p-2 border">فی</th>
@@ -50,7 +57,7 @@ function InvoicePage() {
         </thead>
         <tbody>
           {products?.map((product) => (
-            <tr key={product.id}>
+            <tr key={product.id} className="hover:bg-gray-100">
               <td className="p-2 border text-center">{product.name}</td>
               <td className="p-2 border text-center">{product.count}</td>
               <td className="p-2 border text-center">{product.price}</td>
@@ -81,24 +88,23 @@ function InvoicePage() {
         </tbody>
       </table>
       {deleteModalOpen && selectedId && (
-        <DeleteConfirmModal 
-        productId= {selectedId}
-        onClose={()=>{
-          setDeleteModalOpen(false);
-          setSelectedId(null)
-        }}
+        <DeleteConfirmModal
+          productId={selectedId}
+          onClose={() => {
+            setDeleteModalOpen(false);
+            setSelectedId(null);
+          }}
         />
       )}
       {addModalOpen && (
         <AddProductModal onClose={() => setAddModalOpen(false)} />
       )}
       {modalOpen && editingProduct && (
-        <EditProductModal 
-        product={editingProduct}
-        onClose={()=>{
-          setModalOpen(false),
-          setEditingProduct(null)
-        }}
+        <EditProductModal
+          product={editingProduct}
+          onClose={() => {
+            setModalOpen(false), setEditingProduct(null);
+          }}
         />
       )}
     </div>

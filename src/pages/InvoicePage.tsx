@@ -3,7 +3,7 @@ import Header from "../components/Header"
 import type { Product } from "../types/invoice"
 import { invoiceApi } from "../api/InvoiceApi"
 import { useState } from "react"
-import toast from "react-hot-toast"
+
 import AddProductModal from "../components/AddProductModal"
 import DeleteConfirmModal from "../components/DeleteConfirmModal"
 
@@ -26,7 +26,7 @@ function InvoicePage() {
 
 
   return (
-    <div className="p-6 ">
+    <div className="p-6 space-y-4 ">
       <Header />
       <button
         className="bg-blue-300 text-blue-900 p-1 "

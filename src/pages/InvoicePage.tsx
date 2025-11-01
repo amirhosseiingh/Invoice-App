@@ -8,6 +8,7 @@ import AddProductModal from "../components/AddProductModal"
 import DeleteConfirmModal from "../components/DeleteConfirmModal"
 import EditProductModal from "../components/EditProductModal"
 import { useQuery } from "@tanstack/react-query"
+import Spinner from "../assets/spiner"
 
 function InvoicePage() {
     // const queryClient = useQueryClient()
@@ -23,7 +24,7 @@ function InvoicePage() {
         queryFn : invoiceApi.getProducts
     })
     
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Spinner/>;
 
 
 

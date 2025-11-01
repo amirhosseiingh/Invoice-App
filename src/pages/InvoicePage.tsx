@@ -5,10 +5,14 @@ import { invoiceApi } from "../api/InvoiceApi"
 import { useState } from "react"
 import toast from "react-hot-toast"
 import AddProductModal from "../components/AddProductModal"
+import DeleteConfirmModal from "../components/DeleteConfirmModal"
 
 function InvoicePage() {
-    const queryClient = useQueryClient()
+    // const queryClient = useQueryClient()
+    
     const [modalOpen , setModalOpen]= useState(false)
+    const [deleteModalOpen , setDeleteModalOpen] = useState(false)
+    const [selectedId , setSelectedId] = useState<string | null>(null)
     const [editingProduct, setEditingProduct] = useState<Product | null>(null);
     const [addModalOpen, setAddModalOpen] = useState(false);
 
@@ -16,18 +20,6 @@ function InvoicePage() {
         queryKey : ["products"] , 
         queryFn : invoiceApi.getProducts
     })
-    
-    const deleteMutation = useMutation({
-      mutationFn: invoiceApi.deleteProduct,
-      onSuccess: () => {
-        toast.success("محصول با موفقیت حذف شد");
-        queryClient.invalidateQueries({ queryKey: ["products"] });
-      },
-      onError: () => {
-        toast.error("حذف محصول انجام نشد");
-      },
-    });
-
   if (isLoading) return <div>Loading...</div>;
 
 
@@ -73,7 +65,9 @@ function InvoicePage() {
                 </button>
                 <button
                   className="text-red-800 mr-8 bg-red-400 p-1 rounded hover:text-red-400 hover:bg-red-800"
-                  onClick={() => deleteMutation.mutate(product.id)}
+                  onClick={() => {
+                    setSelectedId(product.id), setDeleteModalOpen(true);
+                  }}
                 >
                   حذف
                 </button>
@@ -82,10 +76,17 @@ function InvoicePage() {
           ))}
         </tbody>
       </table>
-      {addModalOpen && (
-        <AddProductModal
-          onClose={() => setAddModalOpen(false)}
+      {deleteModalOpen && selectedId && (
+        <DeleteConfirmModal 
+        productId= {selectedId}
+        onClose={()=>{
+          setDeleteModalOpen(false);
+          setSelectedId(null)
+        }}
         />
+      )}
+      {addModalOpen && (
+        <AddProductModal onClose={() => setAddModalOpen(false)} />
       )}
     </div>
   );

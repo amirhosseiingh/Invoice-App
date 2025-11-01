@@ -81,13 +81,13 @@ function AddProductModal({ onClose }: AddModalProps) {
             <button
               type="button"
               onClick={onClose}
-              className=" bg-red-300 text-white rounded p-1 hover:bg-red-900"
+              className=" bg-red-300 text-white rounded p-1 hover:bg-red-900 w-16"
             >
               لغو
             </button>
             <button
               type="submit"
-              className=" bg-blue-300 text-white rounded p-1 hover:bg-blue-900"
+              className=" bg-blue-300 text-white rounded p-1 hover:bg-blue-900 w-16"
             >
               افزودن
             </button>
